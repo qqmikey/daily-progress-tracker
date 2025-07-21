@@ -4,7 +4,7 @@
 CLI tool for generating daily/periodic summaries of GitHub repository changes with LLM-powered analysis (Ollama + mistral model). Output is a concise, human-friendly Markdown report per day.
 
 ## Features
-- GitHub authentication via Personal Access Token
+- GitHub authentication via [`Personal Access Token`](https://github.com/settings/tokens)
 - Interactive repository selection
 - Customizable date range (today, yesterday, last month, custom)
 - LLM-based (Ollama, mistral) project change summaries per repo
@@ -15,6 +15,16 @@ CLI tool for generating daily/periodic summaries of GitHub repository changes wi
 - Python 3.10+
 - [Ollama](https://ollama.com/) (local LLM runner)
 - Mistral model for Ollama
+
+## GitHub Personal Access Token
+To use this tool, you need a **GitHub Personal Access Token**: [Create one here](https://github.com/settings/tokens)
+
+- Go to **Settings** → **Developer settings** → **Personal access tokens** → **Tokens (classic)**
+- Click **Generate new token**
+- Set a name, expiration, and select at minimum these scopes:
+  - `repo` (for private repositories)
+  - `read:user`
+- Copy and save your token securely. You will need to enter it on first run.
 
 ## Quickstart
 
@@ -42,7 +52,7 @@ ollama pull mistral
 ```bash
 python reporter.py
 ```
-- On first launch, select report language and authenticate with your GitHub Personal Access Token (with `repo` scope for private repos).
+- On first launch, select report language and authenticate with your GitHub Personal Access Token.
 - Select repositories to track and date range.
 - The tool will generate a Markdown report in `output/YYYY-MM-DD.md`.
 

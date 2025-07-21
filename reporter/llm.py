@@ -1,4 +1,18 @@
 import requests
+import re
+
+def deduplicate_numbered_list(text):
+    lines = text.strip().split("\n")
+    seen = set()
+    result = []
+    for line in lines:
+        # extract only the text after the number and dot
+        m = re.match(r"\s*\d+\.\s*(.*)", line)
+        item = m.group(1).strip() if m else line.strip()
+        if item and item not in seen:
+            seen.add(item)
+            result.append(line)
+    return "\n".join(result)
 
 def ollama_summarize_repo(repo, commits, language):
     if not commits:
@@ -20,7 +34,8 @@ def ollama_summarize_repo(repo, commits, language):
         resp = requests.post(url, json=payload, timeout=60)
         if resp.status_code == 200:
             data = resp.json()
-            return data.get("response", "")
+            summary = data.get("response", "")
+            return deduplicate_numbered_list(summary)
     except Exception:
         pass
     return "[LLM summary unavailable]"

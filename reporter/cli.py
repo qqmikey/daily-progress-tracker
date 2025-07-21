@@ -12,10 +12,17 @@ def prompt_date_range():
     import datetime
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days=1)
-    choice = questionary.select(
-        "Select commit range:",
-        choices=["Today", "Yesterday", "Last month", "Custom"]
-    ).ask()
+    try:
+        choice = questionary.select(
+            "Select commit range:",
+            choices=["Today", "Yesterday", "Last month", "Custom"]
+        ).ask()
+    except (KeyboardInterrupt, EOFError):
+        print("\nCancelled by user.")
+        sys.exit(0)
+    if choice is None:
+        print("Cancelled by user.")
+        sys.exit(0)
     if choice == "Today":
         since = today.isoformat()
         until = (today + datetime.timedelta(days=1)).isoformat()
@@ -26,8 +33,18 @@ def prompt_date_range():
         since = (today - datetime.timedelta(days=30)).isoformat()
         until = (today + datetime.timedelta(days=1)).isoformat()
     else:
-        since = questionary.text("Start date (YYYY-MM-DD):").ask()
-        until = questionary.text("End date (YYYY-MM-DD):").ask()
+        try:
+            since = questionary.text("Start date (YYYY-MM-DD):").ask()
+            if since is None:
+                print("Cancelled by user.")
+                sys.exit(0)
+            until = questionary.text("End date (YYYY-MM-DD):").ask()
+            if until is None:
+                print("Cancelled by user.")
+                sys.exit(0)
+        except (KeyboardInterrupt, EOFError):
+            print("\nCancelled by user.")
+            sys.exit(0)
     return since, until
 
 def main():
