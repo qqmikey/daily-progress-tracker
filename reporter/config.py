@@ -32,6 +32,12 @@ def get_settings():
     if "include_commits" not in cfg:
         cfg["include_commits"] = False
         changed = True
+    if "llm_model" not in cfg:
+        model = questionary.select(
+            "Select LLM model:", choices=["mistral", "llama3"]
+        ).ask()
+        cfg["llm_model"] = model
+        changed = True
     if changed:
         save_config(cfg)
     return cfg

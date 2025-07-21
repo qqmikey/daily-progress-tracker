@@ -51,6 +51,7 @@ def main():
     settings = get_settings()
     language = settings.get("language", "English")
     include_commits = settings.get("include_commits", False)
+    llm_model = settings.get("llm_model", "mistral")
     token = get_github_token()
     if not token:
         sys.exit(1)
@@ -69,7 +70,7 @@ def main():
     print(f"\n{heading}")
     summaries = []
     for repo, commits in commits_by_repo.items():
-        summary = ollama_summarize_repo(repo, commits, language)
+        summary = ollama_summarize_repo(repo, commits, language, llm_model)
         summaries.append(f"REPO: {repo}\n{summary.strip()}\n")
         print(f"REPO: {repo}\n{summary.strip()}\n")
     os.makedirs("output", exist_ok=True)

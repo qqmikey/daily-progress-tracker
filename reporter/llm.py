@@ -6,7 +6,6 @@ def deduplicate_numbered_list(text):
     seen = set()
     result = []
     for line in lines:
-        # extract only the text after the number and dot
         m = re.match(r"\s*\d+\.\s*(.*)", line)
         item = m.group(1).strip() if m else line.strip()
         if item and item not in seen:
@@ -14,7 +13,7 @@ def deduplicate_numbered_list(text):
             result.append(line)
     return "\n".join(result)
 
-def ollama_summarize_repo(repo, commits, language):
+def ollama_summarize_repo(repo, commits, language, model="mistral"):
     if not commits:
         return "No significant changes."
     text = "\n".join([
@@ -29,7 +28,7 @@ def ollama_summarize_repo(repo, commits, language):
         f"No intro, no conclusion, no commit hashes, no word 'commit'. Output in {language}.\n{text}"
     )
     url = "http://localhost:11434/api/generate"
-    payload = {"model": "mistral", "prompt": prompt, "stream": False}
+    payload = {"model": model, "prompt": prompt, "stream": False}
     try:
         resp = requests.post(url, json=payload, timeout=60)
         if resp.status_code == 200:
