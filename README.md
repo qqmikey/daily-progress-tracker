@@ -50,6 +50,10 @@ ollama pull mistral
 
 ### 3. Run the tracker
 ```bash
+./daily-progress-tracker
+```
+или
+```bash
 python reporter.py
 ```
 - On first launch, select report language and authenticate with your GitHub Personal Access Token.
