@@ -1,0 +1,5 @@
+questionary
+requests
+python-dotenv
+pyyaml
+datetime

@@ -1,0 +1,31 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build folders
+/build
+/dist
+/target
+
+# Dependency folders
+/node_modules
+/vendor
+
+# Config files
+.env
+*.local
+
+# IDE and editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# System files
+*.swp
+*~
+
+output/*
