@@ -1,5 +1,7 @@
 import sys
 import questionary
+import warnings
+warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL")
 from .config import get_settings, load_tracked_repos
 from .github import get_github_token, fetch_repos, select_repos, fetch_commits
 from .llm import ollama_summarize_repo
